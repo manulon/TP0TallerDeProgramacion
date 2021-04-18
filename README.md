@@ -229,3 +229,40 @@ Como se menciono anteriormente, las llaves deben estar en ambos lados del else.
 ```
 Claramente dice que la linea es muy larga, que deben tener menos de 80 caracteres. Lo que podria hacerse para solucionar esto es dejar el comentario en dos lineas separadas.
 
+**b. Captura de pantalla indicando los errores de generación del ejecutable. Explicar cada uno e
+indicar si se trata de errores del compilador o del linker.**
+
+Los errores que aparecen son: 
+
+```
+Compilando el codigo...
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso1_main.o -c paso1_main.c
+paso1_main.c: In function 'main':
+paso1_main.c:22:9: error: unknown type name 'wordscounter_t'
+   22 |         wordscounter_t counter;
+      |         ^~~~~~~~~~~~~~
+paso1_main.c:23:9: error: implicit declaration of function 'wordscounter_create' [-Wimplicit-function-declaration]
+   23 |         wordscounter_create(&counter);
+      |         ^~~~~~~~~~~~~~~~~~~
+paso1_main.c:24:9: error: implicit declaration of function 'wordscounter_process' [-Wimplicit-function-declaration]
+   24 |         wordscounter_process(&counter, input);
+      |         ^~~~~~~~~~~~~~~~~~~~
+paso1_main.c:25:24: error: implicit declaration of function 'wordscounter_get_words' [-Wimplicit-function-declaration]
+   25 |         size_t words = wordscounter_get_words(&counter);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~
+paso1_main.c:27:9: error: implicit declaration of function 'wordscounter_destroy' [-Wimplicit-function-declaration]
+   27 |         wordscounter_destroy(&counter);
+      |         ^~~~~~~~~~~~~~~~~~~~
+make: *** [/task/student/MakefileTP0:144: paso1_main.o] Error 1
+
+real    0m0.018s
+user    0m0.010s
+sys     0m0.007s
+[Error] Fallo la compilacion del codigo en 'source_unsafe.zip'. Codigo de error 2
+```
+
+Todos los errores se deben a los mismo, en el ```paso1_main.c``` no se esta incluyendo ```paso1_wordscounter.h``` lo cual hace que las funciones no esten definidas, ya que se encuentran definidas en ese archivo. La manera de solucionarlo es en el main poner la siguiente linea ```#include <paso1_wordscounter.h>```.
+
+
+**b. Captura de pantalla indicando los errores de generación del ejecutable. Explicar cada uno e
+indicar si se trata de errores del compilador o del linker.**
