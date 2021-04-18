@@ -274,7 +274,8 @@ La diferencia entre estos es que si hay un error no es posible la compilacion de
 ## Paso 2: SERCOM - Errores de generación 2
 ### Documentar:
 **a. Describa en breves palabras las correcciones realizadas respecto de la versión anterior.**
-Basicamente lo que se hizo fue reemplazar 'strcpy' por 'memcpy', en lugar de por 'snprintf'. Tambien corrigio todos los errores de estilo que se menciono anteriormente que estaban mal, generando asi que no se marquen errores de ese tipo.
+
+Basicamente lo que se hizo fue reemplazar 'strcpy' por 'memcpy'. Tambien corrigio todos los errores de estilo que se menciono anteriormente que estaban mal, generando asi que no se marquen errores de ese tipo.
 
 **b. Captura de pantalla indicando la correcta ejecución de verificación de normas de
 programación.**
