@@ -335,3 +335,154 @@ sys     0m0.013s
 
 En este caso no voy a hacer como hice antes, de explicar uno a uno. Ya que esta vez todos los errores se basan en lo mismo. La falta de includes, en casi todos los archivos faltan las librerias que incluyen las funciones o tipo de datos que estan faltantes en estos casos. Todos los errores son de compilacion.
 
+## Paso 3: SERCOM - Errores de generación 3
+### Documentar:
+**a. Describa en breves palabras las correcciones realizadas respecto de la versión anterior.**
+
+Los cambios que se realizaron fueron muy similares todos, se incluyeron librerias que antes no estaban incluidos en los pasos anteriores.
+
+**Captura de pantalla indicando los errores de generación del ejecutable. Explicar cada uno e
+indicar si se trata de errores del compilador o del linker.**
+
+Los errores que aparecen son:
+
+```
+Compilando el codigo...
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso3_wordscounter.o -c paso3_wordscounter.c
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso3_main.o -c paso3_main.c
+cc paso3_wordscounter.o paso3_main.o -o tp -lm -Wl,--wrap=send -Wl,--wrap=recv
+/usr/bin/ld: paso3_main.o: in function `main':
+/task/student/source_unsafe/paso3_main.c:27: undefined reference to `wordscounter_destroy'
+collect2: error: ld returned 1 exit status
+make: *** [/task/student/MakefileTP0:135: tp] Error 1
+
+real    0m0.113s
+user    0m0.079s
+sys     0m0.025s
+[Error] Fallo la compilacion del codigo en 'source_unsafe.zip'. Codigo de error 2
+```
+
+El unico error que aparece es que no se encuentra el metodo ```wordscounter_destroy``` el cual se encuentra definido en el ```paso3_wordscounter.h``` pero no implementado en el .c de esta libreria. Esto se puede definir como un error de linkeo.
+
+
+## Paso 4: SERCOM - Memory Leaks y Buffer Overflows
+### Documentar:
+**a. Describa en breves palabras las correcciones realizadas respecto de la versión anterior.**
+
+Al igual que en el paso anterior, se incluyeron algunos archivos que antes no estaban incluidos y se agrego la funcion ```paso3_wordscounter.h``` que fue la que genero el error antes.
+
+**b. Captura de pantalla del resultado de ejecución con Valgrind de la prueba ‘TDA’. Describir los
+errores reportados por Valgrind.**
+
+```
+==00:00:00:00.000 60== Memcheck, a memory error detector
+==00:00:00:00.000 60== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==00:00:00:00.000 60== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==00:00:00:00.000 60== Command: ./tp input_tda.txt
+==00:00:00:00.000 60== Parent PID: 59
+==00:00:00:00.000 60==
+==00:00:00:00.584 60==
+==00:00:00:00.584 60== FILE DESCRIPTORS: 5 open at exit.
+==00:00:00:00.584 60== Open file descriptor 4: input_tda.txt
+==00:00:00:00.584 60==    at 0x495FEAB: open (open64.c:48)
+==00:00:00:00.584 60==    by 0x48E2195: _IO_file_open (fileops.c:189)
+==00:00:00:00.584 60==    by 0x48E2459: _IO_file_fopen@@GLIBC_2.2.5 (fileops.c:281)
+==00:00:00:00.584 60==    by 0x48D4B0D: __fopen_internal (iofopen.c:75)
+==00:00:00:00.584 60==    by 0x48D4B0D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==00:00:00:00.584 60==    by 0x109177: main (paso4_main.c:14)
+==00:00:00:00.584 60==
+==00:00:00:00.584 60== Open file descriptor 3: /task/student/cases/tda/__valgrind__
+==00:00:00:00.584 60==    <inherited from parent>
+==00:00:00:00.584 60==
+==00:00:00:00.584 60== Open file descriptor 2: /task/student/cases/tda/__stderr__
+==00:00:00:00.584 60==    <inherited from parent>
+==00:00:00:00.584 60==
+==00:00:00:00.584 60== Open file descriptor 1: /task/student/cases/tda/__stdout__
+==00:00:00:00.584 60==    <inherited from parent>
+==00:00:00:00.584 60==
+==00:00:00:00.584 60== Open file descriptor 0: /task/student/cases/tda/__stdin__
+==00:00:00:00.584 60==    <inherited from parent>
+==00:00:00:00.584 60==
+==00:00:00:00.584 60==
+==00:00:00:00.584 60== HEAP SUMMARY:
+==00:00:00:00.584 60==     in use at exit: 1,977 bytes in 216 blocks
+==00:00:00:00.584 60==   total heap usage: 218 allocs, 2 frees, 10,169 bytes allocated
+==00:00:00:00.584 60==
+==00:00:00:00.585 60== 472 bytes in 1 blocks are still reachable in loss record 1 of 2
+==00:00:00:00.585 60==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==00:00:00:00.585 60==    by 0x48D4AAD: __fopen_internal (iofopen.c:65)
+==00:00:00:00.585 60==    by 0x48D4AAD: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==00:00:00:00.585 60==    by 0x109177: main (paso4_main.c:14)
+==00:00:00:00.585 60==
+==00:00:00:00.585 60== 1,505 bytes in 215 blocks are definitely lost in loss record 2 of 2
+==00:00:00:00.585 60==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==00:00:00:00.585 60==    by 0x109301: wordscounter_next_state (paso4_wordscounter.c:35)
+==00:00:00:00.585 60==    by 0x1093B5: wordscounter_process (paso4_wordscounter.c:30)
+==00:00:00:00.585 60==    by 0x109197: main (paso4_main.c:24)
+==00:00:00:00.585 60==
+==00:00:00:00.585 60== LEAK SUMMARY:
+==00:00:00:00.585 60==    definitely lost: 1,505 bytes in 215 blocks
+==00:00:00:00.585 60==    indirectly lost: 0 bytes in 0 blocks
+==00:00:00:00.585 60==      possibly lost: 0 bytes in 0 blocks
+==00:00:00:00.585 60==    still reachable: 472 bytes in 1 blocks
+==00:00:00:00.585 60==         suppressed: 0 bytes in 0 blocks
+==00:00:00:00.585 60==
+==00:00:00:00.585 60== For lists of detected and suppressed errors, rerun with: -s
+==00:00:00:00.585 60== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+```
+
+Valgrind reporto que se esta perdiendo memoria, ya que esta no se esta liberando adecuadamente luego de su uso.
+
+**c. Captura de pantalla del resultado de ejecución con Valgrind de la prueba ‘Long Filename’.
+Describir los errores reportados por Valgrind**
+
+```
+**00:00:00:00.532 48** *** memcpy_chk: buffer overflow detected ***: program terminated
+==00:00:00:00.000 48== Memcheck, a memory error detector
+==00:00:00:00.000 48== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==00:00:00:00.000 48== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==00:00:00:00.000 48== Command: ./tp input_extremely_long_filename.txt
+==00:00:00:00.000 48== Parent PID: 47
+==00:00:00:00.000 48==
+**00:00:00:00.532 48** *** memcpy_chk: buffer overflow detected ***: program terminated
+==00:00:00:00.532 48==    at 0x483E9CC: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==00:00:00:00.532 48==    by 0x4843C0A: __memcpy_chk (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==00:00:00:00.532 48==    by 0x109168: memcpy (string_fortified.h:34)
+==00:00:00:00.532 48==    by 0x109168: main (paso4_main.c:13)
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== FILE DESCRIPTORS: 4 open at exit.
+==00:00:00:00.544 48== Open file descriptor 3: /task/student/cases/nombre_largo/__valgrind__
+==00:00:00:00.544 48==    <inherited from parent>
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== Open file descriptor 2: /task/student/cases/nombre_largo/__stderr__
+==00:00:00:00.544 48==    <inherited from parent>
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== Open file descriptor 1: /task/student/cases/nombre_largo/__stdout__
+==00:00:00:00.544 48==    <inherited from parent>
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== Open file descriptor 0: /task/student/cases/nombre_largo/__stdin__
+==00:00:00:00.544 48==    <inherited from parent>
+==00:00:00:00.544 48==
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== HEAP SUMMARY:
+==00:00:00:00.544 48==     in use at exit: 0 bytes in 0 blocks
+==00:00:00:00.544 48==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== All heap blocks were freed -- no leaks are possible
+==00:00:00:00.544 48==
+==00:00:00:00.544 48== For lists of detected and suppressed errors, rerun with: -s
+==00:00:00:00.544 48== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
+
+Se detecto un buffer overflow en la funcion ```memcpy_chk```. Esto significa que lo que se esta intentando guardar en el buffer supero el tamaño del mismo.
+
+**d. ¿Podría solucionarse este error utilizando la función strncpy? ¿Qué hubiera ocurrido con la
+ejecución de la prueba?**
+
+Valgrind no reportaría ningún error porque no se perdería memoria, ya que strncpy copia hasta n caracteres por lo que no entrarian no estarian ocupando memoria. Pero, dandose el caso de que se supere el buffer la prueba daria error, ya que solo se leerian n caracteres y no los caracteres completos, lo cual diferiria de la salida esperada en la prueba.
+
+**e. Explicar de qué se trata un segmentation fault y un buffer overflow.**
+
+El segmentation fault sucede cuando se accede a memoria a la que no está permitido acceder o cuando se accede a memoria de una forma que no esta permitida. Por ejemplo en un vector de 4 posiciones querer ingresar a la posicion 5.
+Por otro lado, el buffer overflow sucede cuando lo que se quiere guardar en el buffer es de mayor tamaño que lo que el buffer tiene reservado para guardar.
+
