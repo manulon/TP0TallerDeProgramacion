@@ -4,11 +4,11 @@
 ## Paso 0: Entorno de trabajo
 ### Documentar:
 **a. Capturas de pantalla de la ejecución del aplicativo (con y sin Valgrind)**
-_Sin valgrind:_
-./tp
+_Sin valgrind:_ \n
+./tp \n
 Hola mundo
 
-_Con valgrind:_
+_Con valgrind:_ \n
 valgrind ./tp
 ```
 ==13807== Memcheck, a memory error detector
