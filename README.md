@@ -1,5 +1,6 @@
 # TP0TallerDeProgramacion
-
-If you want to embed images, this is how you do it:
-
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+# Alumno: Manuel Longo Elia
+# Padrón: 102425
+## Paso 0: Entorno de trabajo
+### Documentar:
+**a. Capturas de pantalla de la ejecución del aplicativo (con y sin Valgrind)**
