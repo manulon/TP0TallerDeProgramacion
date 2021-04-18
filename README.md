@@ -37,16 +37,19 @@ Hola mundo
 ```
 
 **b. ¿Para qué sirve Valgrind? ¿Cuáles son sus opciones más comunes?**
+
 Valgrind es una herramienta que ayuda al programador a controlar la memoria utilizada en su codigo. Lo ayuda, por ejemplo, a ver si su programa pierde memoria.
 Actualmente, siempre he utilizado valgrind corriendolo de la siguiente forma valgrind ```./ejecutable```, se que hay mas formas de utilizar la herramienta, de hecho. Si en una terminal se escribe ``` valgrind --help ``` se muestran todas las opciones posibles para la ejecucion de la herramienta.
 
 **c. ¿Qué representa sizeof()? ¿Cuál sería el valor de salida de sizeof(char) y sizeof(int)?**
+
 La funcion ```sizeof()``` sirve para saber cuantos bytes ocupa una variable o una estructura de datos de un tipo de dato determinado.
 
 El valor de salida de sizeof(char) seria 1 byte, y de sizeof(int) seria 4 bytes.
 
 **d.¿El sizeof() de una struct de C es igual a la suma del sizeof() de cada uno sus elementos?
 Justifique mediante un ejemplo.**
+
 La respuesta es no. Ya que en las estructuras hay padding, es decir que se establece un espacio de "relleno" para que el size del struct sea multiplo de 4.
 
 _Codigo:_
