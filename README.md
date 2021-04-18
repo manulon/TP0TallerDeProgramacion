@@ -5,16 +5,17 @@
 ### Documentar:
 **a. Capturas de pantalla de la ejecución del aplicativo (con y sin Valgrind)**
 
-_Sin valgrind:
-
+_Sin valgrind:_ 
+```
 ./tp
 
 Hola mundo
+```
 
-
-_Con valgrind
-
+_Con valgrind:_
+```
 valgrind ./tp
+```
 
 ```
 ==13807== Memcheck, a memory error detector
