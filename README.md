@@ -8,7 +8,8 @@
 _Sin valgrind:_ 
 ```
 ./tp
-
+```
+```
 Hola mundo
 ```
 
@@ -50,7 +51,7 @@ La respuesta es no. Ya que en las estructuras hay padding, es decir que se estab
 Adjunto ejemplo:
 
 En el caso del ejemplo, se ve que las variables a, c y d ocupan 4 bytes cada una, y la variable b, por otro lado, ocupa 1 solo byte. Entonces la memoria quedaria asi:
-
+```
     00   01    02    03 
     
 00[  A |  A  |  A  |  A  ]
@@ -60,6 +61,7 @@ En el caso del ejemplo, se ve que las variables a, c y d ocupan 4 bytes cada una
 08[  C |  C  |  C  |  C  ]
 
 12[  D |  D  |  D  |  D  ]
+```
 
 ( / representa el espacio de relleno del padding ).
 
