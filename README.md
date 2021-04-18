@@ -179,3 +179,53 @@ if (c == EOF) {
         }
     }
 ```
+
+5-
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:47:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]
+```
+Es muy similar al anterior, si el if tiene una llave del lado derecho, deberia tenerlo tambien en su lado izquierdo.
+
+6-
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:48:  Missing space before ( in if(  [whitespace/parens] [5]
+```
+Aqui lo mismo que se menciono arriba, en vez de  ```if(strchr(delim_words, c) != NULL)``` deberia ser ```if (strchr(delim_words, c) != NULL)```
+
+7-
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:53:  Extra space before last semicolon. If this should be an empty statement, use {} instead.  [whitespace/semicolon] [5]
+```
+Aqui, se corrige el espacio antes del ; del return, dice que deberia ser ```return next_state;```
+
+8-
+
+```
+/task/student//source_unsafe/paso1_main.c:12:  Almost always, snprintf is better than strcpy  [runtime/printf] [4]
+```
+Claramente se ve que aqui recomienda hacer uso de la funcion ```snprintf``` antes que ```strcpy```, igualmente entiendo que esto es a criterio del programador la eleccion de la funcion a utilizar
+
+9-
+
+```
+/task/student//source_unsafe/paso1_main.c:15:  An else should appear on the same line as the preceding }  [whitespace/newline] [4]
+```
+Similar a un error que aparecio antes, dice que antes del else debe precederlo un {
+
+10-
+
+```
+/task/student//source_unsafe/paso1_main.c:15:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]
+```
+Como se menciono anteriormente, las llaves deben estar en ambos lados del else.
+
+11-
+
+```
+/task/student//source_unsafe/paso1_wordscounter.h:5:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+```
+Claramente dice que la linea es muy larga, que deben tener menos de 80 caracteres. Lo que podria hacerse para solucionar esto es dejar el comentario en dos lineas separadas.
+
