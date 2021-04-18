@@ -264,5 +264,10 @@ sys     0m0.007s
 Todos los errores se deben a los mismo, en el ```paso1_main.c``` no se esta incluyendo ```paso1_wordscounter.h``` lo cual hace que las funciones no esten definidas, ya que se encuentran definidas en ese archivo. La manera de solucionarlo es en el main poner la siguiente linea ```#include <paso1_wordscounter.h>```.
 
 
-**b. Captura de pantalla indicando los errores de generación del ejecutable. Explicar cada uno e
-indicar si se trata de errores del compilador o del linker.**
+**c. ¿El sistema reportó algún WARNING? ¿Por qué?**
+
+No, el sistema no reporto ningun warning. La linea que marca el warning deberia tener ```warning``` luego de que se marque el archivo y la linea donde ocurrio el problema. En este caso lo que mostro son todos errores, marcados por la palabra ```error```. 
+
+La diferencia entre estos es que si hay un error no es posible la compilacion de los modulos y el programa no podra ejecutarse, sin embargo con un warning el programa puede ser ejecutado, pero no siempre de manera correcta. El warning es mas que nada una advertencia para que el programador.
+
+
