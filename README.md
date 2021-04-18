@@ -4,15 +4,36 @@
 ## Paso 0: Entorno de trabajo
 ### Documentar:
 **a. Capturas de pantalla de la ejecución del aplicativo (con y sin Valgrind)**
+_Sin valgrind:_
+./tp
+Hola mundo
 
-![Imagen](https://https://github.com/manulon/imagenesParaTP0/a1.png)
+_Con valgrind:_
+valgrind ./tp
+```
+==13807== Memcheck, a memory error detector
+==13807== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13807== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13807== Command: ./tp
+==13807== 
+Hola mundo
+==13807== 
+==13807== HEAP SUMMARY:
+==13807==     in use at exit: 0 bytes in 0 blocks
+==13807==   total heap usage: 1 allocs, 1 frees, 1,024 bytes allocated
+==13807== 
+==13807== All heap blocks were freed -- no leaks are possible
+==13807== 
+==13807== For counts of detected and suppressed errors, rerun with: -v
+==13807== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
 
 b.
 Valgrind es una herramienta que ayuda al programador a controlar la memoria utilizada en su codigo. Lo ayuda, por ejemplo, a ver si su programa pierde memoria.
-Actualmente, siempre he utilizado valgrind corriendolo de la siguiente forma valgrind ./<<CURSIVA>>ejecutable, se que hay mas formas de utilizar la herramienta, de hecho. Si en una terminal se escribe <<cursiva>> valgrind --help <<cursiva>> se muestran todas las opciones posibles para la ejecucion de la herramienta.
+Actualmente, siempre he utilizado valgrind corriendolo de la siguiente forma valgrind ```./ejecutable```, se que hay mas formas de utilizar la herramienta, de hecho. Si en una terminal se escribe ``` valgrind --help ``` se muestran todas las opciones posibles para la ejecucion de la herramienta.
 
 c.
-La funcion sizeof() sirve para saber cuantos bytes ocupa una variable o una estructura de datos de un tipo de dato determinado.
+La funcion ```sizeof()``` sirve para saber cuantos bytes ocupa una variable o una estructura de datos de un tipo de dato determinado.
 El valor de salida de sizeof(char) seria 1 byte, y de sizeof(int) seria 4 bytes.
 
 d.
