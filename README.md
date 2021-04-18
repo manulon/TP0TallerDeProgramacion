@@ -39,7 +39,7 @@ Hola mundo
 **b. ¿Para qué sirve Valgrind? ¿Cuáles son sus opciones más comunes?**
 
 Valgrind es una herramienta que ayuda al programador a controlar la memoria utilizada en su codigo. Lo ayuda, por ejemplo, a ver si su programa pierde memoria.
-Actualmente, siempre he utilizado valgrind corriendolo de la siguiente forma valgrind ```./ejecutable```, se que hay mas formas de utilizar la herramienta, de hecho. Si en una terminal se escribe ``` valgrind --help ``` se muestran todas las opciones posibles para la ejecucion de la herramienta.
+Actualmente, siempre he utilizado valgrind corriendolo de la siguiente forma ```valgrind ./ejecutable```, se que hay mas formas de utilizar la herramienta, de hecho. Si en una terminal se escribe ``` valgrind --help ``` se muestran todas las opciones posibles para la ejecucion de la herramienta.
 
 **c. ¿Qué representa sizeof()? ¿Cuál sería el valor de salida de sizeof(char) y sizeof(int)?**
 
