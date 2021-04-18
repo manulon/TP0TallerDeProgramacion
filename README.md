@@ -112,3 +112,61 @@ STDIN se la conoce como la entrada estandar, su descriptor asociado es el 0. Por
 Se puede redireccionar la salida estándar usando en la terminal el caracter >. Si queremos que la salida se agregue al contenido pre-existente y no se reemplace cada vez, se debe usar el símbolo dos veces: >>. Para redireccionar la entrada estándar se usa el caracter <.
 
 El pipe ( | ) le dice a la terminal que se quiere usar la salida del comando a la izquierda como entrada al comando de la derecha.
+
+
+## Paso 1: SERCOM - Errores de generación y normas de programación
+### Documentar:
+**a. Captura de pantalla mostrando los problemas de estilo detectados. Explicar cada uno.**
+
+Lo que voy a hacer es primero copiar todos los errores de estilo detectados y luego explicarlos cada uno particularmente.
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:27:  Missing space before ( in while(  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:41:  Mismatching spaces inside () in if  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:41:  Should have zero or one spaces inside ( and ) in if  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:47:  An else should appear on the same line as the preceding }  [whitespace/newline] [4]
+/task/student//source_unsafe/paso1_wordscounter.c:47:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:48:  Missing space before ( in if(  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:53:  Extra space before last semicolon. If this should be an empty statement, use {} instead.  [whitespace/semicolon] [5]
+/task/student//source_unsafe/paso1_main.c:12:  Almost always, snprintf is better than strcpy  [runtime/printf] [4]
+/task/student//source_unsafe/paso1_main.c:15:  An else should appear on the same line as the preceding }  [whitespace/newline] [4]
+/task/student//source_unsafe/paso1_main.c:15:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]
+/task/student//source_unsafe/paso1_wordscounter.h:5:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+Done processing /task/student//source_unsafe/paso1_wordscounter.c
+Done processing /task/student//source_unsafe/paso1_main.c
+Done processing /task/student//source_unsafe/paso1_wordscounter.h
+Total errors found: 11
+```
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:27:  Missing space before ( in while(  [whitespace/parens] [5]
+```
+Lo que marca aqui es que se deberia poner un espacio entre la palabra while y la condición para hacer el código más legible. Se debería pasar de: ```while(state != STATE_FINISHED);``` a ```while (state != STATE_FINISHED);```.
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:41:  Mismatching spaces inside () in if  [whitespace/parens] [5]
+```
+Aqui se indica que hay un mal uso de los espacios en el parentesis del if, Se debería pasar de: ```if (  c == EOF);``` a ```if (c == EOF);```.
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:41:  Should have zero or one spaces inside ( and ) in if  [whitespace/parens] [5]
+```
+En este caso dice que puede escribirse así ```if (c == EOF)``` o ```if ( c == EOF )``` para que quede prolijo.
+
+```
+/task/student//source_unsafe/paso1_wordscounter.c:47:  An else should appear on the same line as the preceding }  [whitespace/newline] [4]
+```
+Aqui se indica que el condicional deberia escribirse asi:
+```
+if (c == EOF) {
+        next_state = STATE_FINISHED;
+    } else if (state == STATE_WAITING_WORD) {
+        if (strchr(delim_words, c) == NULL)
+            next_state = STATE_IN_WORD;
+    } else if (state == STATE_IN_WORD) {
+        if(strchr(delim_words, c) != NULL) {
+            self->words++;
+            next_state = STATE_WAITING_WORD;
+        }
+    }
+```
