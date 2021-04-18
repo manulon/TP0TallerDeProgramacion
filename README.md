@@ -271,3 +271,66 @@ No, el sistema no reporto ningun warning. La linea que marca el warning deberia 
 La diferencia entre estos es que si hay un error no es posible la compilacion de los modulos y el programa no podra ejecutarse, sin embargo con un warning el programa puede ser ejecutado, pero no siempre de manera correcta. El warning es mas que nada una advertencia para que el programador.
 
 
+## Paso 2: SERCOM - Errores de generación 2
+### Documentar:
+**a. Describa en breves palabras las correcciones realizadas respecto de la versión anterior.**
+Basicamente lo que se hizo fue reemplazar 'strcpy' por 'memcpy', en lugar de por 'snprintf'. Tambien corrigio todos los errores de estilo que se menciono anteriormente que estaban mal, generando asi que no se marquen errores de ese tipo.
+
+**b. Captura de pantalla indicando la correcta ejecución de verificación de normas de
+programación.**
+
+```
+Done processing /task/student//source_unsafe/paso2_wordscounter.h
+Done processing /task/student//source_unsafe/paso2_main.c
+Done processing /task/student//source_unsafe/paso2_wordscounter.c
+```
+
+**c. Captura de pantalla indicando los errores de generación del ejecutable. Explicar cada uno e
+indicar si se trata de errores del compilador o del linker.**
+
+```
+Compilando el codigo...
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso2_wordscounter.o -c paso2_wordscounter.c
+In file included from paso2_wordscounter.c:1:
+paso2_wordscounter.h:7:5: error: unknown type name 'size_t'
+    7 |     size_t words;
+      |     ^~~~~~
+paso2_wordscounter.h:20:1: error: unknown type name 'size_t'
+   20 | size_t wordscounter_get_words(wordscounter_t *self);
+      | ^~~~~~
+paso2_wordscounter.h:1:1: note: 'size_t' is defined in header '<stddef.h>'; did you forget to '#include <stddef.h>'?
+  +++ |+#include <stddef.h>
+    1 | #ifndef __WORDSCOUNTER_H__
+paso2_wordscounter.h:25:49: error: unknown type name 'FILE'
+   25 | void wordscounter_process(wordscounter_t *self, FILE *text_file);
+      |                                                 ^~~~
+paso2_wordscounter.h:1:1: note: 'FILE' is defined in header '<stdio.h>'; did you forget to '#include <stdio.h>'?
+  +++ |+#include <stdio.h>
+    1 | #ifndef __WORDSCOUNTER_H__
+paso2_wordscounter.c:17:8: error: conflicting types for 'wordscounter_get_words'
+   17 | size_t wordscounter_get_words(wordscounter_t *self) {
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+In file included from paso2_wordscounter.c:1:
+paso2_wordscounter.h:20:8: note: previous declaration of 'wordscounter_get_words' was here
+   20 | size_t wordscounter_get_words(wordscounter_t *self);
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+paso2_wordscounter.c: In function 'wordscounter_next_state':
+paso2_wordscounter.c:30:25: error: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
+   30 |     char* delim_words = malloc(7 * sizeof(char));
+      |                         ^~~~~~
+paso2_wordscounter.c:30:25: error: incompatible implicit declaration of built-in function 'malloc' [-Werror]
+paso2_wordscounter.c:5:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+    4 | #include <stdbool.h>
+  +++ |+#include <stdlib.h>
+    5 |
+cc1: all warnings being treated as errors
+make: *** [/task/student/MakefileTP0:144: paso2_wordscounter.o] Error 1
+
+real    0m0.021s
+user    0m0.006s
+sys     0m0.013s
+[Error] Fallo la compilacion del codigo en 'source_unsafe.zip'. Codigo de error 2
+```
+
+En este caso no voy a hacer como hice antes, de explicar uno a uno. Ya que esta vez todos los errores se basan en lo mismo. La falta de includes, en casi todos los archivos faltan las librerias que incluyen las funciones o tipo de datos que estan faltantes en estos casos. Todos los errores son de compilacion.
+
