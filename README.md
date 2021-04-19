@@ -262,6 +262,7 @@ sys     0m0.007s
 ```
 
 Todos los errores se deben a los mismo, en el ```paso1_main.c``` no se esta incluyendo ```paso1_wordscounter.h``` lo cual hace que las funciones no esten definidas, ya que se encuentran definidas en ese archivo. La manera de solucionarlo es en el main poner la siguiente linea ```#include <paso1_wordscounter.h>```.
+Es error del compilador.
 
 
 **c. ¿El sistema reportó algún WARNING? ¿Por qué?**
@@ -614,3 +615,38 @@ Starting program: /home/manulon/Escritorio/lqmp/tp input_single_word.txt
 El primer comando utilizado es list functions, lo que hace este comando es listar todas las funciones involucradas en los archivos. El segundo comando, list wordscounter_next_state, lo que hace es mostrar algunas lineas de la funcion que esta seguida del 'list', luego list lo que hace es listar las siguientes n lineas. Lo que hace break 45 es marcar un 'breakpoint' que representa el punto donde el programador se quiere parar para comnenzar a debuggear. Y finalmente con run input_single_word.txt corre el archivo de texto que esta escritro a continuacion.
 El debugger no se detuvo en el breakpoint porque no se entro nunca a esa parte del codigo, ya que se esta ejecutando la prueba 'una_palabra' entonces no hay delimitadores que separen palabras entonces salta al final de la sentencia.
 
+## Paso 6: SERCOM - Entrega exitosa
+### Documentar:
+**a. Describa en breves palabras las correcciones realizadas respecto de la versión anterior.**
+
+Las correcciones realizadas fueron: cambiar la constante error de -1 a 1, cambiar la forma de llamar a los delimitadores, reacomodar la logica de la espera de una palabra nueva y finalmente cambiar tambien el if en el cual no encuentra un delimitador.
+
+**b. Captura de pantalla mostrando todas las entregas realizadas, tanto exitosas como fallidas.**
+
+```
+Bitácora de envíos
+18/04/2021 22:59:49 - 100.0%
+18/04/2021 21:01:34 - 0.0%
+18/04/2021 20:36:33 - 0.0%
+18/04/2021 20:10:13 - 0.0%
+18/04/2021 03:24:45 - 0.0%
+18/04/2021 01:43:54 - 0.0%
+```
+
+**c. Captura de pantalla mostrando la ejecución de la prueba ‘Single Word’ de forma local con las
+distintas variantes indicadas.**
+
+```
+(base) manulon@manulongo:~/Escritorio/paso6-final$ make
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -std=c11 -o paso6_wordscounter.o -c paso6_wordscounter.c
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -std=c11 -o paso6_main.o -c paso6_main.c
+cc paso6_wordscounter.o paso6_main.o -o tp -lm
+(base) manulon@manulongo:~/Escritorio/paso6-final$ ./tp input_single_word.txt
+1
+(base) manulon@manulongo:~/Escritorio/paso6-final$ ./tp <input_single_word.txt
+1
+(base) manulon@manulongo:~/Escritorio/paso6-final$ ./tp <input_single_word.txt >output_single_word.txt
+(base) manulon@manulongo:~/Escritorio/paso6-final$ 
+```
+
+                                                                                                        Trabajo realizado por Manuel Longo el dia 18/04/2021
