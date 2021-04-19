@@ -528,7 +528,7 @@ archivo input_single_word.txt?**
 
 El ultimo caracter del archivo es el numero hexadecimal 0x64 que convertido a decimal es el numero 100 que en ascii representa la letra 'd'.
 
-**Captura de pantalla con el resultado de la ejecución con gdb. Explique brevemente los
+**d. Captura de pantalla con el resultado de la ejecución con gdb. Explique brevemente los
 comandos utilizados en gdb. ¿Por qué motivo el debugger no se detuvo en el breakpoint de la
 línea 45: self->words++;?**
 
