@@ -495,7 +495,7 @@ Los cambios fueron tomar el nombre del archivo directo de la terminal y cerrarlo
 También se creó una cadena de caracteres estática para almacenar los delimitadores de palabras en lugar de pedir memoria.
 
 **b. Describa el motivo por el que fallan las prueba ‘Invalid File’ y ‘Single Word’. ¿Qué información
-entrega SERCOM para identificar el error? Realice una captura de pantalla. **
+entrega SERCOM para identificar el error? Realice una captura de pantalla.**
 
 La informacion que tenemos sobre 'Invalid File' es:
 
