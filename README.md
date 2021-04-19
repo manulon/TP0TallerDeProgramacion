@@ -486,3 +486,131 @@ Valgrind no reportaría ningún error porque no se perdería memoria, ya que str
 El segmentation fault sucede cuando se accede a memoria a la que no está permitido acceder o cuando se accede a memoria de una forma que no esta permitida. Por ejemplo en un vector de 4 posiciones querer ingresar a la posicion 5.
 Por otro lado, el buffer overflow sucede cuando lo que se quiere guardar en el buffer es de mayor tamaño que lo que el buffer tiene reservado para guardar.
 
+## Paso 5: SERCOM - Código de retorno y salida estándar
+### Documentar:
+**a. Describa en breves palabras las correcciones realizadas respecto de la versión anterior.**
+
+Los cambios fueron tomar el nombre del archivo directo de la terminal y cerrarlo el archivo luego de su uso.
+También se creó una cadena de caracteres estática para almacenar los delimitadores de palabras en lugar de pedir memoria.
+
+**b. Describa el motivo por el que fallan las prueba ‘Invalid File’ y ‘Single Word’. ¿Qué información
+entrega SERCOM para identificar el error? Realice una captura de pantalla. **
+
+La informacion que tenemos sobre 'Invalid File' es:
+
+```
+[=>] Comparando archivo_invalido/__return_code__...
+1c1
+< 255
+---
+> 1
+```
+Esto quiere decir que se esta esperando un 1 y se recibe un 255. 
+
+La informacion que tenemos sobre 'Single word' es:
+
+```
+[=>] Comparando una_palabra/__stdout__...
+1c1
+< 0
+---
+> 1
+```
+Esto quiere decir que se esta esperando un 1 y se recibe un 0. 
+
+**c. Captura de pantalla de la ejecución del comando hexdump. ¿Cuál es el último carácter del
+archivo input_single_word.txt?**
+
+```
+00000000  77 6f 72 64                                       |word|
+00000004
+```
+
+El ultimo caracter del archivo es el numero hexadecimal 0x64 que convertido a decimal es el numero 100 que en ascii representa la letra 'd'.
+
+**Captura de pantalla con el resultado de la ejecución con gdb. Explique brevemente los
+comandos utilizados en gdb. ¿Por qué motivo el debugger no se detuvo en el breakpoint de la
+línea 45: self->words++;?**
+
+```
+gdb ./tp
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./tp...
+(gdb) info functions
+All defined functions:
+
+File paso5_main.c:
+9:	int main(int, char **);
+
+File paso5_wordscounter.c:
+14:	void wordscounter_create(wordscounter_t *);
+18:	void wordscounter_destroy(wordscounter_t *);
+22:	size_t wordscounter_get_words(wordscounter_t *);
+26:	void wordscounter_process(wordscounter_t *, FILE *);
+34:	static char wordscounter_next_state(wordscounter_t *, char, char);
+
+Non-debugging symbols:
+0x0000000000001000  _init
+0x0000000000001090  __cxa_finalize@plt
+0x00000000000010a0  fclose@plt
+0x00000000000010b0  __stack_chk_fail@plt
+0x00000000000010c0  strchr@plt
+0x00000000000010d0  __printf_chk@plt
+0x00000000000010e0  fopen@plt
+0x00000000000010f0  getc@plt
+0x00000000000011b0  _start
+0x00000000000011e0  deregister_tm_clones
+--Type <RET> for more, q to quit, c to continue without paging--c
+0x0000000000001210  register_tm_clones
+0x0000000000001250  __do_global_dtors_aux
+0x0000000000001290  frame_dummy
+0x0000000000001380  __libc_csu_init
+0x00000000000013f0  __libc_csu_fini
+0x00000000000013f8  _fini
+(gdb) list wordscounter_next_state
+33	
+34	static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
+35	    const char* delim_words = " ,.;:\n";
+36	
+37	    char next_state = state;
+38	    if (c == EOF) {
+39	        next_state = STATE_FINISHED;
+40	    } else if (state == STATE_WAITING_WORD) {
+41	        if (strchr(delim_words, c) == NULL)
+42	            next_state = STATE_IN_WORD;
+(gdb) list
+43	    } else if (state == STATE_IN_WORD) {
+44	        if (strchr(delim_words, c) != NULL) {
+45	            self->words++;
+46	            next_state = STATE_WAITING_WORD;
+47	        }
+48	    }
+49	    return next_state;
+50	}
+51	
+(gdb) break 45
+Punto de interrupción 1 at 0x1300: file paso5_wordscounter.c, line 45.
+(gdb) run input_single_word.txt
+Starting program: /home/manulon/Escritorio/lqmp/tp input_single_word.txt
+0
+[Inferior 1 (process 10631) exited normally]
+
+```
+
+El primer comando utilizado es list functions, lo que hace este comando es listar todas las funciones involucradas en los archivos. El segundo comando, list wordscounter_next_state, lo que hace es mostrar algunas lineas de la funcion que esta seguida del 'list', luego list lo que hace es listar las siguientes n lineas. Lo que hace break 45 es marcar un 'breakpoint' que representa el punto donde el programador se quiere parar para comnenzar a debuggear. Y finalmente con run input_single_word.txt corre el archivo de texto que esta escritro a continuacion.
+El debugger no se detuvo en el breakpoint porque no se entro nunca a esa parte del codigo, ya que se esta ejecutando la prueba 'una_palabra' entonces no hay delimitadores que separen palabras entonces salta al final de la sentencia.
+
